@@ -3,60 +3,24 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
+import { prisma } from "@/lib/prisma"
 
-// Define TypeScript types
-interface Article {
-  id: string
-  title: string
-  featuredImage: string
-  category: string
-  createdAt: Date
-  author: {
-    name: string
-    imageUrl: string
-  }
-}
-
-export async function TopArticles() {
-  // Mock data for articles
-  const articles: Article[] = [
-    {
-      id: "1",
-      title: "Mastering React in 2024",
-      featuredImage:
-        "https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?q=80&w=1200",
-      category: "Programming",
-      createdAt: new Date(),
+const TopArticles = async () => {
+  const articles = await prisma.articles.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      comments: true,
       author: {
-        name: "John Doe",
-        imageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+        select: {
+          name: true,
+          email: true,
+          imageUrl: true,
+        },
       },
     },
-    {
-      id: "2",
-      title: "The Future of AI in Web Development",
-      featuredImage:
-        "https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=1200",
-      category: "Technology",
-      createdAt: new Date(),
-      author: {
-        name: "Jane Smith",
-        imageUrl: "https://randomuser.me/api/portraits/women/2.jpg",
-      },
-    },
-    {
-      id: "3",
-      title: "Understanding the Basics of Cloud Computing",
-      featuredImage:
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
-      category: "Cloud Computing",
-      createdAt: new Date(),
-      author: {
-        name: "Alice Johnson",
-        imageUrl: "https://randomuser.me/api/portraits/women/3.jpg",
-      },
-    },
-  ]
+  })
 
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -112,3 +76,5 @@ export async function TopArticles() {
     </div>
   )
 }
+
+export default TopArticles

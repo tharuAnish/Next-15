@@ -85,7 +85,8 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
           {/* Article Actions */}
-          <LikeButton />
+          <LikeButton articleId={article.id} likes={likes} isLiked={isLiked} />
+
           {/* Comments Section */}
           <Card className="p-6">
             <div className="flex items-center gap-2 mb-8">

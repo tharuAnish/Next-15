@@ -96,10 +96,10 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
             </div>
 
             {/* Comment Form */}
-            <CommentInput />
+            <CommentInput articleId={article.id} />
 
             {/* Comments List */}
-            <CommentList />
+            <CommentList comments={comments} />
           </Card>
         </article>
       </main>

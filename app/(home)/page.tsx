@@ -5,6 +5,7 @@ import TopArticles from "@/components/home/top-articles"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Suspense } from "react"
+import { AllArticlesPageSkeleton } from "../articles/page"
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
           </div>
 
           {/* Top Articles */}
-          <Suspense fallback={<h1>Loading....</h1>}>
+          <Suspense fallback={<AllArticlesPageSkeleton />}>
             <TopArticles />
           </Suspense>
 
